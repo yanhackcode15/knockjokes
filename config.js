@@ -37,9 +37,9 @@ export async function getJoke() {
 
 export async function addJoke(subject, punchline){
 
-    // const newJokeRef = doc(collection(db, "jokes"));
-    // const data = {subject, punchline};
-    // await setDoc(newJokeRef, data);
+    const newJokeRef = doc(collection(db, "jokes"));
+    const data = {subject, punchline};
+    await setDoc(newJokeRef, data);
     console.log('joke added');
 }
 

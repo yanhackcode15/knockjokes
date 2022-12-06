@@ -9,6 +9,7 @@ function Button(){
 
   function postData(url = '', data = {}) {
     // Default options are marked with *
+    
     fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin
@@ -27,16 +28,13 @@ function Button(){
         return res.text().then(text => { throw new Error(text) })
       }
       else {
-        console.log('success', res.text())
-        return res.text();
+        return res.text().then(text=>console.log(text));
       }
     })
     .catch(error=>{
-      // Error handling here!
       console.log('error', error);
   });
-    
-    // return; // parses JSON response into native JavaScript objects
+  
   }
   
    function clickHandler(data={}) {
@@ -52,7 +50,7 @@ function Button(){
         <input className="form-subject" type="text" name="subject" placeholder="Banana" value={joke.subject} onChange={handleTextChange}></input>
         <label htmlFor="punchline">{!joke.subject.length?"...":joke.subject} who?</label>
         <input className="form-punchline" type="text" name="punchline" placeholder="Banana messages for me?" value={joke.punchline} onChange={handleTextChange}></input>
-        <button className="form-button" onClick={()=>{clickHandler(joke)}}>Submit</button>
+        <button className="form-button" onClick={(event)=>{event.preventDefault();clickHandler(joke)}}>Submit</button>
       </form>
     </div>
   )

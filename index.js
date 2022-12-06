@@ -1,6 +1,7 @@
 import dotenv from 'dotenv' 
 dotenv.config()
 import express from 'express';
+import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
@@ -18,14 +19,17 @@ const port = process.env.PORT || 8000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 
 var joke = {}
 app.get('/joke', (req, res)=>{
   res.sendFile(path.join(__dirname, '/index.html'));
 })
-app.post('/addJoke', (req, res)=>{
-  console.log('server received resquest');
+app.post('/addJoke', async (req, res)=>{
+  await addJoke(req.body.subject, req.body.punchline);
+  console.log(req.body);
+  res.type('text/plain');
   res.send('received the post')
 })
 app.post('/start', async (req, res) => {
