@@ -1,7 +1,7 @@
-import * as dotenv from 'dotenv' ;
+import * as dotenv from "dotenv";
 dotenv.config();
 import { initializeApp } from "firebase/app";
-import {getFirestore, collection, query, getDocs, where, limit, getCountFromServer} from "firebase/firestore";
+import {getFirestore, collection, query, getDocs, where, limit, getCountFromServer, doc, setDoc} from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: process.env.API_KEY,
@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-export default async function getJoke() {
+export async function getJoke() {
     const jokesCollection = collection(db, "jokes");
     const snapshot = await getCountFromServer(jokesCollection);
     const count = snapshot.data().count;
@@ -35,6 +35,13 @@ export default async function getJoke() {
     return {id, subject, punchline}
 }
 
+export async function addJoke(subject, punchline){
+
+    // const newJokeRef = doc(collection(db, "jokes"));
+    // const data = {subject, punchline};
+    // await setDoc(newJokeRef, data);
+    console.log('joke added');
+}
 
 function randomizer(totalCount){
     return Math.ceil(Math.random()*totalCount);//an integer number from 1 to 10
