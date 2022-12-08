@@ -39,7 +39,7 @@ function Button(){
   
    function clickHandler(data={}) {
     const {subject, punchline} = data;
-    postData('https://d796-47-147-243-114.ngrok.io/addJoke', {subject, punchline});
+    postData('addJoke', {subject, punchline});
   }
           
   return ( 
