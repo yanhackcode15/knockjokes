@@ -26,6 +26,7 @@ var joke = {}
 app.get('/joke', (req, res)=>{
   res.sendFile(path.join(__dirname, '/index.html'));
 })
+
 app.post('/addJoke', async (req, res)=>{
   await addJoke(req.body.subject, req.body.punchline);
   console.log(req.body);
@@ -113,7 +114,12 @@ app.all('/punchline', (req, res)=>{
     res.send(twiml.toString());
   
 })
-
+app.get("*", (req, res) => {
+  
+  // Here user can also design an
+  // error page and render it 
+  res.send("PAGE NOT FOUND");
+});
 app.use('/', express.static(__dirname + '/'));
 
 
