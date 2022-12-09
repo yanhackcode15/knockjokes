@@ -26,6 +26,13 @@ var joke = {}
 app.get('/joke', (req, res)=>{
   res.sendFile(path.join(__dirname, '/index.html'));
 })
+app.get('/confirm', (req, res)=>{
+  res.send('sent');
+})
+
+app.get('/posterror', (req, res)=>{
+  res.send('Your input fields are blank. Check and submit again. ');
+})
 
 app.post('/addJoke', async (req, res)=>{
   await addJoke(req.body.subject, req.body.punchline);
@@ -114,12 +121,12 @@ app.all('/punchline', (req, res)=>{
     res.send(twiml.toString());
   
 })
-app.get("*", (req, res) => {
+// app.get("*", (req, res) => {
   
-  // Here user can also design an
-  // error page and render it 
-  res.send("PAGE NOT FOUND");
-});
+//   // Here user can also design an
+//   // error page and render it 
+//   res.send("PAGE NOT FOUND");
+// });
 app.use('/', express.static(__dirname + '/'));
 
 

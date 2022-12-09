@@ -1,6 +1,7 @@
+//confirmation page rendering a submit anotehr joke button
+//create a user login
 
-
-function Button(){
+export default function FormContainer(){
   const [joke, setJoke] = React.useState({subject: "", punchline:""})
   function handleTextChange() {
     setJoke((prevJoke)=>{
@@ -9,7 +10,9 @@ function Button(){
 
   function postData(url = '', data = {}) {
     // Default options are marked with *
-    
+    if (data.subject.length<2 || data.punchline.length<2){
+      window.location.href = '/posterror';
+    }
     fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin
@@ -25,10 +28,13 @@ function Button(){
     })
     .then(res=>{
       if (!res.ok) {
-        return res.text().then(text => { throw new Error(text) })
+        return res.text().then(text => { throw new Error(text) });
       }
       else {
-        return res.text().then(text=>console.log(text));
+        return res.text().then(text=>{
+          console.log(text);
+          window.location.href = '/confirm';
+        });
       }
     })
     .catch(error=>{
@@ -57,7 +63,7 @@ function Button(){
 }
 
 
-const container = document.getElementById("form_container");
-const root = ReactDOM.createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<Button />);
+// const container = document.getElementById("form_container");
+// const root = ReactDOM.createRoot(container); // createRoot(container!) if you use TypeScript
+// root.render(<Button />);
 
