@@ -1,9 +1,22 @@
 //convert to standard react with bundler and fix the randomizer to count the total, i don't have IDs in all jokes in firestore and add a buton on other route
-const container = document.getElementById("app");
-const root = ReactDOM.createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<App />);
+// const container = document.getElementById("app");
+// const root = ReactDOM.createRoot(container); // createRoot(container!) if you use TypeScript
+// root.render(<App />);
+
+
+ReactDOM.render(
+    <App />,
+    document.getElementById("app")
+)
+
 
 function App(){
+    // const history = ReactRouterDOM.useHistory();
+  
+    // const errorHandling = () => {
+    //     history.push("/error");
+    // }
+
     return (
         <ReactRouterDOM.HashRouter>
             <ReactRouterDOM.Route path="/" exact component={Joke} />
@@ -42,7 +55,8 @@ function Joke(){
       // Default options are marked with *
       if (data.subject.length<2 || data.punchline.length<2){
         window.location.href = '/posterror';
-        // <ReactRouterDOM.Redirect to="/" />
+        
+        // errorHandling();
         return 
 
       }
