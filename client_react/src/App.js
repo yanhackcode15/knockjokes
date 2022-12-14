@@ -1,62 +1,59 @@
-//convert to standard react with bundler and fix the randomizer to count the total, i don't have IDs in all jokes in firestore and add a buton on other route
-// const container = document.getElementById("app");
-// const root = ReactDOM.createRoot(container); // createRoot(container!) if you use TypeScript
-// root.render(<App />);
+
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate
+} from "react-router-dom";
 
 
-ReactDOM.render(
-    <App />,
-    document.getElementById("app")
-)
-
-
-function App(){
-    // const history = ReactRouterDOM.useHistory();
-  
-    // const errorHandling = () => {
-    //     history.push("/error");
-    // }
-
+export default function App(){
     return (
-        <ReactRouterDOM.HashRouter>
-            <ReactRouterDOM.Route path="/" exact component={Joke} />
-            <ReactRouterDOM.Route path="/confirmation" component={Confirmation} />
-            <ReactRouterDOM.Route path="/error" component={ErrorPage} />
-            <ReactRouterDOM.Route path="/joke" component={Joke} />
-        </ReactRouterDOM.HashRouter>
-        
+      <Router>
+          <Routes>
+              <Route path="/confirmation" element={<Confirmation />}>
+              </Route>
+              <Route path="/error" element={<Error />}>
+              </Route>
+              <Route path="/joke" element={<Joke />}>
+              </Route>
+              <Route path="/" element={<Joke />}>
+              </Route>
+          </Routes>
+      </Router>
     )
 }
-function ErrorPage(){
+function Error(){
     return (
-        <div>
-            <h1>Your subject or punchline is black. Try again</h1>
-            <Button>
-                <ReactRouterDOM.Link to="/joke">
-                New Joke
-                </ReactRouterDOM.Link>
-            </Button>
-        </div>
+      <div className="error">
+        <h1>Your subject or punchline is black. <Link to="/joke">Try again</Link></h1>
+      </div>
     )
 }
 function Confirmation(){
     return (
-        <div>confirm</div>
+      <div className="confirmation">
+        <h1>Thanks for submitting your joke. <Link to="/joke">Add a Joke</Link></h1>
+      </div>
     )
 }
+
+
 function Joke(){
+  const navigate = useNavigate();
     const [joke, setJoke] = React.useState({subject: "", punchline:""})
-    function handleTextChange() {
+    function handleTextChange(event) {
+      const { name, value } = event.target
       setJoke((prevJoke)=>{
-          return {...prevJoke, [event.target.name]: event.target.value}})
+          return {...prevJoke, [name]: value}})
     }
   
     function postData(url = '', data = {}) {
       // Default options are marked with *
       if (data.subject.length<2 || data.punchline.length<2){
-        window.location.href = '/posterror';
-        
-        // errorHandling();
+        navigate('/error');
         return 
 
       }
@@ -80,9 +77,9 @@ function Joke(){
             }
             else {
               return res.text().then(text=>{
-                console.log(text);
-                window.location.href = '/confirm';
-                // return <ReactRouterDOM.Redirect to="/confirmation"/>
+                
+                navigate('/confirmation');
+                
               });
             }
           })
@@ -93,9 +90,10 @@ function Joke(){
       
     }
     
-    function clickHandler(data={}) {
-      const {subject, punchline} = data;
-      return postData('addJoke', {subject, punchline});
+    function clickHandler(event) {
+        event.preventDefault();
+      const {subject, punchline} = joke;
+      return postData('/addJoke', {subject, punchline});
     }
             
     return ( 
@@ -106,7 +104,7 @@ function Joke(){
           <input className="form-subject" type="text" name="subject" placeholder="Banana" value={joke.subject} onChange={handleTextChange}></input>
           <label htmlFor="punchline">{!joke.subject.length?"...":joke.subject} who?</label>
           <input className="form-punchline" type="text" name="punchline" placeholder="Banana messages for me?" value={joke.punchline} onChange={handleTextChange}></input>
-          <button className="form-button" onClick={(event)=>{event.preventDefault();return clickHandler(joke)}}>Submit</button>
+          <button className="form-button" onClick={clickHandler}>Submit</button>
         </form>
       </div>
     )

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv' 
 dotenv.config()
 import express from 'express';
+
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -21,11 +22,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-
 var joke = {}
 app.get('/joke', (req, res)=>{
-  res.sendFile(path.join(__dirname, '/index.html'));
+  res.sendFile(path.join(__dirname, '..', '/client_react/public/', '/index.html'));
 })
+//must use absolutely path in the sendFile. _dirname provides abso path
 app.get('/confirm', (req, res)=>{
   res.send('sent');
 })
@@ -121,13 +122,8 @@ app.all('/punchline', (req, res)=>{
     res.send(twiml.toString());
   
 })
-// app.get("*", (req, res) => {
   
-//   // Here user can also design an
-//   // error page and render it 
-//   res.send("PAGE NOT FOUND");
-// });
-app.use('/', express.static(__dirname + '/'));
+app.use('/', express.static(path.join(__dirname, '..', 'client_react')));
 
 
 app.use((err, req, res, next) => {
