@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+
 var joke = {}
 app.get('/', (req, res)=>{
   res.sendFile(path.join(__dirname, '/client_react/public/', '/index.html'));

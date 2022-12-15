@@ -20,8 +20,9 @@ export async function getJoke() {
     const jokesCollection = collection(db, "jokes");
     const snapshot = await getCountFromServer(jokesCollection);
     const count = snapshot.data().count;
-    // const jokeId = randomizer(count)
-    const jokeId = 10;
+    console.log('total joke count', count);
+    const jokeId = randomizer(count)
+    // const jokeId = 10;//to comment out
     const q = query(jokesCollection, where("id", "==",jokeId ), limit(1))
     const querySnapshot = await getDocs(q);
     var id;
@@ -46,6 +47,25 @@ export async function addJoke(subject, punchline){
 function randomizer(totalCount){
     return Math.ceil(Math.random()*totalCount);//an integer number from 1 to 10
 }   
+
+export async function amendJoke(){
+    console.log("amend joke");
+    const jokesCollection = collection(db, "jokes");
+    const q = query(jokesCollection)
+    const querySnapshot = await getDocs(q);
+    var id;
+    var subject;
+    var punchline;
+    var data = {};
+    data.id=10;
+    querySnapshot.forEach(async (doc) => {
+        if(doc.data().id===11){
+            data.id = data.id + 1; 
+            await setDoc(doc.ref, data, {merge:true});
+       };
+       
+    });
+}
 
 
 
