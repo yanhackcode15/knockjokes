@@ -23,8 +23,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 var joke = {}
-app.get('/joke', (req, res)=>{
-  res.sendFile(path.join(__dirname, '..', '/client_react/public/', '/index.html'));
+app.get('/', (req, res)=>{
+  res.sendFile(path.join(__dirname, '/client_react/public/', '/index.html'));
 })
 //must use absolutely path in the sendFile. _dirname provides abso path
 app.get('/confirm', (req, res)=>{
@@ -123,7 +123,7 @@ app.all('/punchline', (req, res)=>{
   
 })
   
-app.use('/', express.static(path.join(__dirname, '..', 'client_react')));
+app.use('/', express.static(path.join(__dirname, 'client_react')));
 
 
 app.use((err, req, res, next) => {
