@@ -123,7 +123,7 @@ app.all('/punchline', (req, res)=>{
   
 })
   
-app.use('/', express.static(path.join(__dirname, 'client_react')));
+app.use('/', express.static(path.join(__dirname, '/client_react')));
 
 
 app.use((err, req, res, next) => {
