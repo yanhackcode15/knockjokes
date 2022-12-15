@@ -7,10 +7,26 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "build": "cd ./client_react && npm ci && npm run build"
+    "build": "npm ci && cd ./client_react && npm run build"
   },
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "css-loader": "^1.0.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.41.1",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.9.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-hot-loader": "^4.3.11",
+    "react-router-dom": "^6.4.5"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -18,9 +34,6 @@
     "express": "^4.17.1",
     "firebase": "^9.14.0",
     "http-proxy-middleware": "^2.0.6",
-    "path": "^0.12.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "twilio": "^3.51.0"
   }
 }
