@@ -22,7 +22,6 @@ export async function getJoke() {
     const count = snapshot.data().count;
     console.log('total joke count', count);
     const jokeId = randomizer(count)
-    // const jokeId = 10;//to comment out
     const q = query(jokesCollection, where("id", "==",jokeId ), limit(1))
     const querySnapshot = await getDocs(q);
     var id;
@@ -38,8 +37,13 @@ export async function getJoke() {
 }
 
 export async function addJoke(subject, punchline){
-    const newJokeRef = doc(collection(db, "jokes"));
-    const data = {subject, punchline};
+    const jokesCollection = collection(db, "jokes");
+    const snapshot = await getCountFromServer(jokesCollection);
+    const count = snapshot.data().count;
+    const id = count+1;
+    const data = {subject, id, punchline};
+    const newJokeRef = doc(jokesCollection);
+
     await setDoc(newJokeRef, data);
     console.log('joke added');
 }
